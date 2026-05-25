@@ -1,14 +1,14 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, FileText, MessageSquare, TrendingUp, ShieldCheck, Award, Zap } from "lucide-react";
+import { ArrowRight, FileText, MessageSquare, TrendingUp, ShieldCheck} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -27,18 +27,14 @@ export function Home() {
         
         <div className="container relative z-10 max-w-5xl mx-auto text-center">
           <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="space-y-8">
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
-              <Award className="w-4 h-4" />
-              <span>Premium AI Coaching</span>
-            </motion.div>
             
             <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-serif text-primary-text leading-tight tracking-tight">
               Practice smarter.<br className="hidden md:block" /> Interview <span className="italic text-primary">better.</span>
             </motion.h1>
             
             <motion.p variants={fadeInUp} className="text-lg md:text-xl text-secondary-text max-w-2xl mx-auto font-light leading-relaxed">
-              An elite, AI-powered interview copilot designed for ambitious professionals. Rehearse with precision, receive actionable feedback, and walk into your next interview with unshakeable confidence.
-            </motion.p>
+  Practice technical and HR interviews with AI-powered mock sessions, resume analysis, and real-time feedback.
+</motion.p>
             
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
               <Link href="/interview-setup">

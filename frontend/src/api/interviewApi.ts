@@ -1,11 +1,20 @@
 import axios from "axios";
 
-// Just a placeholder for any other API needs
-export const sendChatMessage = async (message: string): Promise<string> => {
-  // Simulate delay and response since we don't have a real endpoint here
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve("That's a great question. Let's work on improving that specific area.");
-    }, 1500);
+const API_URL = import.meta.env.VITE_API_URL;
+
+export const generateInterviewQuestions = async (
+  role: string,
+  difficulty: string,
+  analysis: any
+) => {
+  const response = await axios.post(`${API_URL}/api/interview/generate`, {
+    role,
+    difficulty,
+    analysis,
   });
+
+  return response.data.questions;
+};
+export const sendChatMessage = async (message: string) => {
+  return `AI Coach: ${message}`;
 };

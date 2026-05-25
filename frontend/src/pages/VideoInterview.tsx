@@ -6,7 +6,7 @@ import {
   CheckCircle, Play, Square, VideoOff, User, ArrowLeft, Activity, VideoOff as VideoOffIcon, User as UserIcon
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { sampleQuestions } from "@/data/sampleQuestions";
+import { generateInterviewQuestions } from "@/api/interviewApi";
 import { videoSessionStore, resetVideoSession } from "@/lib/videoSessionStore";
 import { VideoAnswer } from "@/lib/fluencyAnalysis";
 
@@ -53,9 +53,7 @@ const QUESTION_TIME = 120;
 const ROLES = ["Frontend Developer", "Backend Developer", "GenAI Engineer", "Data Analyst", "Software Developer"];
 const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
 
-function getQuestions(role: string) {
-  return sampleQuestions[role] ?? sampleQuestions["Frontend Developer"];
-}
+
 
 export function VideoInterview() {
   const [, setLocation] = useLocation();
@@ -88,8 +86,9 @@ const roleOptions = ROLES.includes(role)
   const transcriptRef = useRef("");
   const isRecordingRef = useRef(false);
 
-  const questions = getQuestions(role);
-  const currentQuestion = questions[currentIndex];
+  const [questions, setQuestions] = useState<any[]>([]);
+const currentQuestion = questions[currentIndex];
+const [isGeneratingQuestions, setIsGeneratingQuestions] = useState(false);
 
   const hasSpeechRecognition =
     typeof window !== "undefined" &&
@@ -154,13 +153,33 @@ const roleOptions = ROLES.includes(role)
     setCameraActive(false);
   }
 }, []);
-const startInterview = () => {
-  resetVideoSession();
-  setPhase("interview");
+const startInterview = async () => {
+  try {
+    setIsGeneratingQuestions(true);
 
-  setTimeout(() => {
-    startCameraAndMic();
-  }, 500);
+    const savedAnalysis = localStorage.getItem("resumeAnalysis");
+    const analysis = savedAnalysis ? JSON.parse(savedAnalysis) : null;
+
+    const aiQuestions = await generateInterviewQuestions(
+      role,
+      difficulty,
+      analysis
+    );
+
+    setQuestions(aiQuestions);
+    setCurrentIndex(0);
+    resetVideoSession();
+    setPhase("interview");
+
+    setTimeout(() => {
+      startCameraAndMic();
+    }, 500);
+  } catch (error) {
+    console.error("Failed to generate questions:", error);
+    alert("Could not generate AI questions. Please try again.");
+  } finally {
+    setIsGeneratingQuestions(false);
+  }
 };
 
   const createRecognition = useCallback(() => {
@@ -345,9 +364,11 @@ const startInterview = () => {
             <Button
               data-testid="button-begin-interview"
               onClick={startInterview}
+              disabled={isGeneratingQuestions}
               className="w-full h-14 rounded-2xl bg-primary hover:bg-[#5A3F2C] text-white text-base font-medium shadow-lg"
             >
-              <Play className="w-5 h-5 mr-2" /> Begin Interview
+              <Play className="w-5 h-5 mr-2" />
+{isGeneratingQuestions ? "Generating AI Questions..." : "Begin Interview"}
             </Button>
           </div>
         </motion.div>

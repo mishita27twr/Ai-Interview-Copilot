@@ -29,32 +29,70 @@ export const uploadResume = async (req, res) => {
     const completion = await groq.chat.completions.create({
       model: "llama-3.1-8b-instant",
       messages: [
-        {
-          role: "system",
-          content:
-            "You are an AI resume analyzer. Extract useful interview preparation information from the resume.",
-        },
-        {
-          role: "user",
-          content: `
-Analyze this resume and return ONLY valid JSON with this structure:
+  {
+    role: "system",
+    content: `
+You are an expert AI resume parser and interview preparation assistant.
+
+Your job:
+1. Extract structured information from the resume.
+2. Identify real skills, projects, tools, technologies, education, and experience.
+3. Suggest suitable job roles.
+4. Identify weak areas for interviews.
+5. Return ONLY valid JSON. No markdown. No explanation.
+    `,
+  },
+  {
+    role: "user",
+    content: `
+Analyze this resume carefully and return ONLY valid JSON in this exact structure:
 
 {
-  "skills": [],
-  "projects": [],
+  "summary": "",
+  "skills": {
+    "programmingLanguages": [],
+    "frontend": [],
+    "backend": [],
+    "databases": [],
+    "aiMl": [],
+    "tools": [],
+    "softSkills": []
+  },
+  "projects": [
+    {
+      "name": "",
+      "description": "",
+      "techStack": [],
+      "features": [],
+      "possibleInterviewQuestions": []
+    }
+  ],
   "experience": [],
   "education": [],
   "suggestedRoles": [],
-  "weakAreas": []
+  "weakAreas": [],
+  "interviewFocus": {
+    "technicalTopics": [],
+    "projectTopics": [],
+    "hrTopics": []
+  }
 }
+
+Rules:
+- Extract only what is present or strongly implied in the resume.
+- Do not invent fake projects.
+- If something is missing, use an empty array.
+- suggestedRoles should match the candidate profile.
+- weakAreas should be based on missing or shallow resume details.
+- possibleInterviewQuestions should be specific to each project.
+- Return valid JSON only.
 
 Resume:
 ${resumeText}
-          `,
-        },
-      ],
+    `,
+  },
+],
     });
-
     const rawResponse = completion.choices[0].message.content;
 
     res.status(200).json({
