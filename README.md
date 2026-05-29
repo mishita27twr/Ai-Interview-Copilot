@@ -1,17 +1,11 @@
 ## Live Demo
 
-🔗 **Live Application:**
-# 🎯 AI Interview Copilot
+**Live Application:**
+# AI Interview Copilot
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-success?style=for-the-badge&logo=vercel)](https://ai-interview-copilot-zb7b.vercel.app/)
 
 An AI-powered interview preparation platform...
-
-## GitHub Repository
-
-🔗 https://github.com/mishita27twr/Ai-Interview-Copilot
-
----
 
 ## About the Project
 
@@ -80,21 +74,15 @@ The project combines modern frontend technologies with Generative AI to create a
 
 Add your screenshot here:
 
-```md
-![Home Page](./screenshots/home.png)
-```
+![Home Page](/screenshots/home.png)
 
 ### Interview Session
 
-```md
 ![Interview Session](./screenshots/interview-session.png)
-```
 
 ### AI Assistance
 
-```md
 ![AI Assistance](./screenshots/ai-assistance.png)
-```
 
 ---
 
