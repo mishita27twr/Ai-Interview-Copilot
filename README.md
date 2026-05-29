@@ -11,7 +11,7 @@ An AI-powered interview preparation platform...
 
 AI Interview Copilot is a modern interview preparation platform designed to simulate real interview experiences. The application provides AI-powered assistance during interview practice sessions, helping users formulate better responses and prepare for technical as well as behavioral interviews.
 
-The project combines modern frontend technologies with Generative AI to create an interactive and engaging learning experience for students, freshers, and job seekers.
+The project combines modern frontend technologies with Groq AI to create an interactive and engaging learning experience for students, freshers, and job seekers.
 
 ---
 
