@@ -160,10 +160,9 @@ This project helped me gain practical experience in:
 ## Developer
 
 **Mishita Tiwari**
-B.Tech CSE (AI & ML)
-VIT Bhopal University
 
 GitHub: https://github.com/mishita27twr
+Linkdn : https://www.linkedin.com/in/mishita-tiwari/
 
 ---
 
